@@ -18,11 +18,13 @@ jobs:
       - name: validate env
         shell: bash
         run: |
-          echo ${GITHUB_REF}
-          echo "$GITHUB_REF"
-          echo $([ "${GITHUB_REF}" = "refs/heads/main" ] && echo "match")
-          [ "${{ github.event.inputs.environment }}" = "prod" ] && [ "${GITHUB_REF}" != "refs/heads/main" ] && $(echo "Only main can be deployed to prod"; exit 1);
-          
+          if [ "${{ github.event.inputs.environment }}" = "prod" ] && [ "${GITHUB_REF}" != "refs/heads/main" ] 
+          then
+            echo "Only main can be deployed to production"
+            exit 1;
+          fi
+
+          echo "Validation successful"
           exit 0;
       
   # This workflow contains a single job called "build"
