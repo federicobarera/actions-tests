@@ -6,11 +6,22 @@ name: CI
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+       environment:
+         required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  validation:
+    steps:
+      - name: validate env
+        shell: bash
+        run: |
+          ["${{ github.event.inputs.environment }}" = "prod"] && ["${GITHUB_REF}" != "ref/heads/main ] && exit 1
+      
   # This workflow contains a single job called "build"
   build:
+    needs: [validation]
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
