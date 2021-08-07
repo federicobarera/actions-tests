@@ -19,7 +19,9 @@ jobs:
         shell: bash
         run: |
           echo ${GITHUB_REF}
-          [ "${{ github.event.inputs.environment }}" = "prod" ] && [ "$GITHUB_REF" != "refs/heads/main" ] && exit 1
+          echo "$GITHUB_REF"
+          echo $([ "${GITHUB_REF}" != "refs/heads/main" ] && echo 1)
+          [ "${{ github.event.inputs.environment }}" = "prod" ] && [ "${GITHUB_REF}" != "refs/heads/main" ] && exit 1
       
   # This workflow contains a single job called "build"
   build:
