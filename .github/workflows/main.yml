@@ -18,7 +18,7 @@ jobs:
       - name: validate env
         shell: bash
         run: |
-          ["${{ github.event.inputs.environment }}" = "prod"] && ["${GITHUB_REF}" != "ref/heads/main" ] && exit 1
+          [ "${{ github.event.inputs.environment }}" = "prod" ] && [ "${GITHUB_REF}" != "ref/heads/main" ] && exit 1
       
   # This workflow contains a single job called "build"
   build:
